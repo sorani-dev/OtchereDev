@@ -125,6 +125,9 @@ MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
 MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
-    STATICFILES_DIRS = [
-    ]
+    BASE_DIR/'static'
 ]
+
+# Solve auth.User.groups: (fields.E304) Reverse accessor for 'auth.User.groups' clashes with reverse accessor for 'core.CustomUser.groups'.
+# where user is the app name and User is the model class name
+AUTH_USER_MODEL = 'core.CustomUser'

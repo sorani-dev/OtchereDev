@@ -17,7 +17,7 @@ MOVIE_CHOICES = (
 
 
 class CustomUser(AbstractUser):
-    profiles = models.ManyToManyField('Profile', null=True, blank=True)
+    profiles = models.ManyToManyField('Profile', blank=True)
 
 
 class Profile(models.Model):
@@ -35,8 +35,8 @@ class Movie(models.Model):
     uuid = models.UUIDField(default=uuid4)
     type = models.CharField(max_length=10, choices=MOVIE_CHOICES)
     videos = models.ManyToManyField('Video')
-    flyer = models.ImageField(uploaded_to='flyers')
-    age_limit = models.CharField(max_length=10, choices=AGE)
+    flyer = models.ImageField(upload_to='flyers')
+    age_limit = models.CharField(max_length=10, choices=AGE_CHOICES)
 
     class Meta:
         """Meta definition for Movie."""
