@@ -29,9 +29,9 @@
         {% endfor %}
     </div>
     <div class="flex justify-center items-center">
-        <button class="px-4 py-2 rounded-md outline-none bg-gray-400 text-gray-100">
-            Add A New Profile
-        </button>
+        <button class="px-4 py-2 rounded-md outline-none bg-gray-400 text-gray-100"><a href="{% url 'core:profile_create' %}">
+                Add A New Profile
+            </a></button>
     </div>
 </section>
 {% endblock content %}
