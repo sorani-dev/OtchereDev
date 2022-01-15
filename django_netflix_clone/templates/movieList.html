@@ -44,12 +44,12 @@
             <h2 class="text-gray-200 text-2xl font-medium">
                 Popular on Netflix
             </h2>
-            {{ movies }}
+
             <div class="flex justify-center  items-center min-w-full  movie_list">
 
                 {% for movie in movies %}
                 <div class="flex-shrink-0  h-40 m-4  bg-blue-500 rounded-md cursor-pointer overflow-hidden w-40">
-                    <a href="#">
+                    <a href="{% url 'core:movie_detail' movie_id=movie.uuid %}">
                         <img src="{{ movie.flyer.url }}" class="w-full h-full " alt="{{ movie.title }}">
                     </a>
                 </div>
