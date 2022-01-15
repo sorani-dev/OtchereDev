@@ -15,7 +15,7 @@
 
         {% for profile in profiles %}
         <div class="w-32 h-32 m-4  bg-blue-500 rounded-md cursor-pointer flex flex-col justify-center items-center text-center">
-            <a href="#">
+            <a href="{% url 'core:watch' profile_id=profile.uuid %}">
                 <p class="text-6xl">
                     {{ profile.name |slice:":1" }}
                 </p>

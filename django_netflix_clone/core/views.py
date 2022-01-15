@@ -9,7 +9,7 @@ from django.views import View
 
 from .forms import ProfileForm
 
-from .models import Profile
+from .models import Movie, Profile
 
 # Create your views here.
 
@@ -54,3 +54,21 @@ class CreateProfile(View):
         return render(request, 'profileCreate.html', {
             'form': form,
         })
+
+
+@method_decorator(login_required, name='dispatch')
+class Watch(View):
+    def get(self, request: HttpRequest, profile_id: str, *args: List, **kwargs: Dict) -> HttpResponse:
+        try:
+            profile: Profile = Profile.objects.get(uuid=profile_id)
+            movies: QuerySet[Movie] = Movie.objects.filter(
+                age_limit=profile.age_limit)
+
+            if profile not in request.user.profiles.all():
+                return redirect(to='core:profile_list')
+
+            return render(request, 'movieList.html', {
+                'movies': movies,
+            })
+        except Profile.DoesNotExist as e:
+            return redirect(to='core:profile_list')
