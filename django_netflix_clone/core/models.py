@@ -46,7 +46,7 @@ class Movie(models.Model):
 
     def __str__(self):
         """Unicode representation of Movie."""
-        pass
+        return self.title
 
 
 class Video(models.Model):
@@ -60,7 +60,3 @@ class Video(models.Model):
 
         verbose_name = 'Video'
         verbose_name_plural = 'Videos'
-
-    def __str__(self):
-        """Unicode representation of Video."""
-        pass
