@@ -1,7 +1,7 @@
 import imp
 from django.urls import path
 
-from .views import CreateProfile, Index, ProfileList, ShowMovieDetail, Watch
+from .views import CreateProfile, Index, ProfileList, ShowMovie, ShowMovieDetail, Watch
 
 app_name = 'core'
 
@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/create/', CreateProfile.as_view(), name='profile_create'),
     path('watch/<str:profile_id>/', Watch.as_view(), name='watch'),
     path('movie/details/<str:movie_id>/',
-         ShowMovieDetail.as_view(), name='movie_detail')
+         ShowMovieDetail.as_view(), name='movie_detail'),
+    path('movie/play/<str:movie_id>', ShowMovie.as_view(), name='play'),
 ]

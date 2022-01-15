@@ -17,8 +17,17 @@
 {% block content %}
 {% include 'partials/_navbar.html' %}
 <main class='bg-primary_black h-full w-full '>
-
-    <video src="{% static 'test.mp4' %}" controls class="w-full h-screen player"></video>
+    {{ movie |json_script:'movie_data'}}
+    <video src="" controls class="w-full h-screen player"></video>
 
 </main>
+<script>
+    const videoElement = document.querySelector('video')
+    const movie_data = JSON.parse(document.getElementById('movie_data').textContent)
+
+    const url = new URL(location.href)
+
+    const videoParams = parseInt(url.searchParams.get('api')) ? parseInt(url.searchParams.get('api')) : 0
+    videoElement.src = `${location.protocol}//${location.host.replace(location.pathname)}/media/${movie_data[videoParams].file}`
+</script>
 {% endblock content %}

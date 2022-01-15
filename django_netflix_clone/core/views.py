@@ -9,7 +9,7 @@ from django.views import View
 
 from .forms import ProfileForm
 
-from .models import Movie, Profile
+from .models import Movie, Profile, Video
 
 # Create your views here.
 
@@ -83,4 +83,17 @@ class ShowMovieDetail(View):
                 'movie': movie,
             })
         except Movie.DoesNotExist as e:
+            return redirect(to='core:profile_list')
+
+
+@method_decorator(login_required, name='dispatch')
+class ShowMovie(View):
+    def get(self, request: HttpRequest, movie_id: str, *args: List, **kwargs: Dict) -> HttpResponse:
+        try:
+            movie: Movie = Movie.objects.get(uuid=movie_id)
+            videos: QuerySet[Video] = movie.videos.values()
+            return render(request=request, template_name='showMovie.html', context={
+                'movie': list(videos),
+            })
+        except Movie.DoesNotExist:
             return redirect(to='core:profile_list')
