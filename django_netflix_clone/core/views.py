@@ -1,14 +1,14 @@
 from typing import Dict, List, Union
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views import View
 
 from .forms import ProfileForm
-
 from .models import Movie, Profile, Video
 
 # Create your views here.
@@ -92,8 +92,28 @@ class ShowMovie(View):
         try:
             movie: Movie = Movie.objects.get(uuid=movie_id)
             videos: QuerySet[Video] = movie.videos.values()
+
+            # Videos List
+            videos_list: List[Video] = list(videos)
+
+            # Get the episode number from the query parameters
+            try:
+                # Convert the episode number to int
+                videoParams: int = int(request.GET.get('epi', 0))
+                # Video is not in the video list
+                if videoParams >= len(videos_list) or videoParams < 0:
+                    raise IndexError(
+                        f'Episode number (epi) must be in the range of the current videos registered: 0 to {len(videos_list)-1}, query params for epi was: {videoParams}')
+            except (ValueError, IndexError) as e:
+                print('error', e)
+                videoParams = 0
+
+            # The selected video url
+            media_url: str = f"{settings.MEDIA_URL}{videos_list[videoParams]['file']}"
+
             return render(request=request, template_name='showMovie.html', context={
-                'movie': list(videos),
+                'movie': videos_list,
+                'media_url': media_url,
             })
         except Movie.DoesNotExist:
             return redirect(to='core:profile_list')
