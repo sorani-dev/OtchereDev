@@ -19,15 +19,16 @@
         {% endblock content %}
 
         <script>
-            const nav = document.querySelector('.nav')
-
-            document.addEventListener('scroll', e => {
-                if (scrollY > 100) {
-                    nav.classList.add('bg-gray-900')
-                } else {
-                    nav.classList.remove('bg-gray-900')
-                }
-            })
+            const nav = document.querySelector('nav')
+            if (nav !== null) {
+                document.addEventListener('scroll', e => {
+                    if (scrollY > 100) {
+                        nav.classList.add('bg-gray-900')
+                    } else {
+                        nav.classList.remove('bg-gray-900')
+                    }
+                })
+            }
         </script>
     </body>
 
